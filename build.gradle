@@ -73,13 +73,15 @@ dependencies {
     }
 
     // Other plugins
-    compileOnly('net.ess3:EssentialsX:2.18.0') { transitive = false }
+    //compileOnly('net.ess3:EssentialsX:2.18.0') { transitive = false }
     compileOnly ('com.sk89q.worldedit:worldedit-bukkit:7.1.0-SNAPSHOT') {
         exclude group: 'io.papermc', module: 'paperlib'
         exclude group: 'org.bstats.bStats-Metrics', module: 'bstats-bukkit'
         exclude group: 'org.bukkit', module: 'bukkit'
         exclude group: 'com.destroystokyo.paper', module: 'paper-api'
     }
+
+    implementation files('libs/CMI8.8.0.0.jar')
 }
 
 // source file modification (modify version string)

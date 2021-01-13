@@ -1,6 +1,7 @@
 package cat.nyaa.nyaautils.particle;
 
 import cat.nyaa.nyaautils.NyaaUtils;
+import com.Zrips.CMI.CMI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -21,10 +22,10 @@ public class ParticleTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        Collection<String> vanishedPlayers = plugin.ess.getVanishedPlayersNew();
+        Collection<UUID> vanishedPlayers = CMI.getInstance().getVanishManager().getAllVanished();
         long time = System.currentTimeMillis() / 50;
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.isValid() && p.getGameMode() != GameMode.SPECTATOR && !vanishedPlayers.contains(p.getName()) &&
+            if (p.isValid() && p.getGameMode() != GameMode.SPECTATOR && !vanishedPlayers.contains(p.getUniqueId()) &&
                     !bypassPlayers.contains(p.getUniqueId())) {
                 ParticleType type = null;
                 if (!p.isGliding() && plugin.cfg.particles_type_player) {

@@ -5,7 +5,7 @@ import cat.nyaa.nyaacore.component.IMessageQueue;
 import cat.nyaa.nyaacore.component.ISystemBalance;
 import cat.nyaa.nyaacore.component.NyaaComponent;
 import cat.nyaa.nyaautils.commandwarpper.EsschatCmdWarpper;
-import cat.nyaa.nyaautils.commandwarpper.TeleportCmdWarpper;
+//import cat.nyaa.nyaautils.commandwarpper.TeleportCmdWarpper;
 import cat.nyaa.nyaautils.commandwarpper.TpsPingCmdWarpper;
 import cat.nyaa.nyaautils.dropprotect.DropProtectListener;
 import cat.nyaa.nyaautils.elytra.ElytraEnhanceListener;
@@ -28,9 +28,7 @@ import cat.nyaa.nyaautils.timer.TimerListener;
 import cat.nyaa.nyaautils.timer.TimerManager;
 import cat.nyaa.nyaautils.tpsping.TpsPingTask;
 import cat.nyaa.nyaautils.vote.VoteTask;
-import com.earth2me.essentials.ISettings;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import net.ess3.api.IEssentials;
 import org.bukkit.Bukkit;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.event.HandlerList;
@@ -51,13 +49,12 @@ public class NyaaUtils extends JavaPlugin {
     public ExpCapListener expCapListener;
     public MailboxListener mailboxListener;
     public ElytraEnhanceListener elytraEnhanceListener;
-    public TeleportCmdWarpper teleportCmdWarpper;
+    //public TeleportCmdWarpper teleportCmdWarpper;
     public FuelManager fuelManager;
     public TimerManager timerManager;
     public TimerListener timerListener;
     public WorldEditPlugin worldEditPlugin;
     public RealmListener realmListener;
-    public IEssentials ess;
     public ParticleListener particleListener;
     public ParticleTask particleTask;
     public SignEditListener signEditListener;
@@ -84,7 +81,7 @@ public class NyaaUtils extends JavaPlugin {
         dpListener = new DropProtectListener(this);
         dsListener = new DamageStatListener(this);
         elytraEnhanceListener = new ElytraEnhanceListener(this);
-        teleportCmdWarpper = new TeleportCmdWarpper(this);
+        //teleportCmdWarpper = new TeleportCmdWarpper(this);
         exhibitionListener = new ExhibitionListener(this);
         expCapListener = new ExpCapListener(this);
         mailboxListener = new MailboxListener(this);
@@ -100,7 +97,6 @@ public class NyaaUtils extends JavaPlugin {
         } catch (ComponentNotAvailableException e) {
             systemBalance = null;
         }
-        ess = (IEssentials) getServer().getPluginManager().getPlugin("Essentials");
         particleTask = new ParticleTask(this);
         particleListener = new ParticleListener(this);
         signEditListener = new SignEditListener(this);
@@ -110,20 +106,6 @@ public class NyaaUtils extends JavaPlugin {
         redstoneControlListener = new RedstoneControlListener(this);
         sitListener = new SitListener(this);
         extraBackpackListener = new ExtraBackpackListener(this);
-        try {
-            ISettings settings = ess.getSettings();
-            Class<? extends ISettings> essSettingsClass = settings.getClass();
-            Long timeout = (Long) essSettingsClass.getMethod("getLastMessageReplyRecipientTimeout").invoke(settings);
-            // TODO: sort out reply recipient when isLastMessageReplyRecipient set to false instead disabling it
-            Boolean allow = (Boolean) essSettingsClass.getMethod("isLastMessageReplyRecipient").invoke(settings);
-            esschatCmdWarpper = new EsschatCmdWarpper(this, allow, timeout);
-        } catch (NoSuchMethodException e) {
-            getLogger().warning("EssentialsX not available, not enabling mention notify in /reply commands");
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            getLogger().warning("Unexpected error when enabling mention notify in EssentialsX commands");
-        }
-
         voteTask = null;
         if (cfg.ping_enable || cfg.tps_enable) {
             tpsPingTask = new TpsPingTask(this);

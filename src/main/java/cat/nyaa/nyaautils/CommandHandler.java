@@ -24,6 +24,7 @@ import cat.nyaa.nyaautils.repair.RepairCommands;
 import cat.nyaa.nyaautils.signedit.SignEditCommands;
 import cat.nyaa.nyaautils.timer.TimerCommands;
 import cat.nyaa.nyaautils.vote.VoteTask;
+import com.Zrips.CMI.CMI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -777,7 +778,6 @@ public class CommandHandler extends CommandReceiver {
                 Location old = player.getLocation().clone();
                 if (player.teleport(locations.get(success))) {
                     success++;
-                    plugin.ess.getUser(player).setLastLocation(old);
                 }
             }
         }

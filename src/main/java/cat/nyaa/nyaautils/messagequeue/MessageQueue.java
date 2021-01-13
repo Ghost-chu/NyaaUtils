@@ -4,7 +4,9 @@ import cat.nyaa.nyaacore.Message;
 import cat.nyaa.nyaacore.component.IMessageQueue;
 import cat.nyaa.nyaautils.I18n;
 import cat.nyaa.nyaautils.NyaaUtils;
-import net.ess3.api.events.AfkStatusChangeEvent;
+//import net.ess3.api.events.AfkStatusChangeEvent;
+import com.Zrips.CMI.events.CMIAfkEnterEvent;
+import com.Zrips.CMI.events.CMIAfkLeaveEvent;
 import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -51,10 +53,9 @@ public class MessageQueue implements IMessageQueue, Listener {
     }
 
     @EventHandler
-    public void onPlayerAfkBack(AfkStatusChangeEvent event) {
+    public void onPlayerAfkBack(CMIAfkLeaveEvent event) {
         if (!plugin.cfg.message_queue_enable) return;
-        if (event.getValue()) return;
-        Player player = event.getAffected().getBase();
+        Player player = event.getPlayer();
         sendQueue(player);
     }
 
